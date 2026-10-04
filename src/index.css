@@ -1,0 +1,85 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/outfit';
+@import '@fontsource-variable/geist-mono';
+
+@theme {
+  --font-sans: 'Outfit Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'Geist Mono Variable', ui-monospace, monospace;
+
+  --color-ink: #06080b;
+  --color-ink-2: #0b0f14;
+  --color-surface: #10151c;
+  --color-surface-2: #161d26;
+  --color-line: rgb(255 255 255 / 0.08);
+  --color-line-strong: rgb(255 255 255 / 0.14);
+  --color-fg: #eef1f4;
+  --color-fg-2: #9aa3ad;
+  --color-fg-3: #5f6873;
+  --color-signal: #3ddcff;
+  --color-signal-ink: #021216;
+  --color-ember: #ff7a45;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+    background: var(--color-ink);
+  }
+  body {
+    background: var(--color-ink);
+    color: var(--color-fg-2);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3 {
+    color: var(--color-fg);
+    text-wrap: balance;
+  }
+  p { text-wrap: pretty; }
+  ::selection { background: rgb(61 220 255 / 0.25); color: var(--color-fg); }
+  :focus-visible { outline: 2px solid var(--color-signal); outline-offset: 3px; border-radius: 8px; }
+}
+
+/* Lenis */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+
+/* One fixed film-grain layer for the whole page */
+.grain::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Survey grid used behind sections */
+.survey-grid {
+  background-image:
+    linear-gradient(var(--color-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-line) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(60% 60% at 50% 50%, #000 20%, transparent 75%);
+}
+
+/* The hairline "scan" light used across the page */
+.scanline {
+  height: 1px;
+  background: var(--color-signal);
+  box-shadow: 0 0 12px 1px rgb(61 220 255 / 0.7), 0 0 60px 8px rgb(61 220 255 / 0.15);
+}
+
+/* Scroll hint: a short signal bar sliding down its track */
+@keyframes hint {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(200%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}

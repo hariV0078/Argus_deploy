@@ -1,0 +1,239 @@
+[
+ {
+  "id": "RUN_1",
+  "base": "/Output/RUN_1/",
+  "files": [
+   {
+    "path": "accuracy_report.json",
+    "bytes": 706
+   },
+   {
+    "path": "geotiff/dsm.tif",
+    "bytes": 7021098
+   },
+   {
+    "path": "geotiff/dsm_bounds.json",
+    "bytes": 251
+   },
+   {
+    "path": "geotiff/orthophoto.tif",
+    "bytes": 37787833
+   },
+   {
+    "path": "mesh/model.fbx",
+    "bytes": 63981804
+   },
+   {
+    "path": "mesh/model.glb",
+    "bytes": 64110280
+   },
+   {
+    "path": "mesh/model.mtl",
+    "bytes": 149
+   },
+   {
+    "path": "mesh/model.obj",
+    "bytes": 162929335
+   },
+   {
+    "path": "mesh/model_origin.json",
+    "bytes": 223
+   },
+   {
+    "path": "mesh/model_texture.jpg",
+    "bytes": 10122125
+   },
+   {
+    "path": "mesh/model_texture_1.jpg",
+    "bytes": 5979850
+   },
+   {
+    "path": "mesh/texture_stats.json",
+    "bytes": 539
+   },
+   {
+    "path": "mesh_stats.json",
+    "bytes": 439
+   },
+   {
+    "path": "pointcloud/dense.las",
+    "bytes": 114439661
+   },
+   {
+    "path": "pointcloud/dense.ply",
+    "bytes": 118841007
+   },
+   {
+    "path": "previews/dsm.jpg",
+    "bytes": 782137
+   },
+   {
+    "path": "previews/mesh_obl.jpg",
+    "bytes": 701883
+   },
+   {
+    "path": "previews/mesh_top.jpg",
+    "bytes": 1054557
+   },
+   {
+    "path": "previews/orthophoto.jpg",
+    "bytes": 1320564
+   },
+   {
+    "path": "reconstruction_summary.json",
+    "bytes": 1026
+   },
+   {
+    "path": "timings.json",
+    "bytes": 432
+   }
+  ],
+  "timings": {
+   "total_s": 1195.4,
+   "budget_s": 1200,
+   "frames_in": 1454,
+   "frames_used": 150,
+   "phases": [
+    {
+     "phase": "Ingestion",
+     "seconds": 116.3,
+     "rc": 0,
+     "timed_out": false
+    },
+    {
+     "phase": "Dynamic Masking",
+     "seconds": 38.9,
+     "rc": 0,
+     "timed_out": false
+    },
+    {
+     "phase": "Reconstruction",
+     "seconds": 1039.9,
+     "rc": 0,
+     "timed_out": false
+    }
+   ]
+  },
+  "accuracy": {
+   "what_this_is": "Agreement of reconstructed camera centres with onboard GPS after alignment — NOT certified absolute accuracy (needs check points).",
+   "frames_registered": 150,
+   "frames_input": 150,
+   "mean_reprojection_error_px": 0.472,
+   "gsd_m_estimate": 0.2633,
+   "camera_vs_gps": {
+    "east": {
+     "mean_m": 0.019,
+     "sigma_m": 1.297,
+     "rmse_m": 1.297,
+     "max_abs_m": 4.065
+    },
+    "north": {
+     "mean_m": 0.001,
+     "sigma_m": 1.302,
+     "rmse_m": 1.302,
+     "max_abs_m": 3.721
+    },
+    "up": {
+     "mean_m": -0.003,
+     "sigma_m": 1.037,
+     "rmse_m": 1.037,
+     "max_abs_m": 2.978
+    },
+    "horizontal_rmse_m": 1.838
+   },
+   "check_points": null
+  },
+  "meshStats": {
+   "points": 4387537,
+   "point_spacing": 0.2968,
+   "poisson_depth": 11,
+   "t_poisson_s": 75.9,
+   "unobserved_gap_m2": 1.4,
+   "trimmed_vertices_pct": 1.6,
+   "removed_fragment_tris": 45695,
+   "t_close_holes_s": 34.2,
+   "holes_before_fill": 48,
+   "boundary_loops": 2,
+   "interior_holes": 0,
+   "unobserved_openings": 1,
+   "largest_interior_hole_perimeter": 0,
+   "pieces": 1,
+   "vertices": 1003410,
+   "faces": 1999866,
+   "t_total_s": 233.7
+  },
+  "summary": {
+   "elapsed_s": 1103.7,
+   "elapsed_min": 18.4,
+   "colmap": {
+    "accuracy_report": "data/jobs/32c66d22-947c-49d0-9796-5e9afd8faf43/sfm/accuracy_report.json",
+    "sparse_geo": "data/jobs/32c66d22-947c-49d0-9796-5e9afd8faf43/sfm/sparse_geo",
+    "dense_ply": "data/jobs/32c66d22-947c-49d0-9796-5e9afd8faf43/sfm/dense.ply",
+    "mesh_ply": "data/jobs/32c66d22-947c-49d0-9796-5e9afd8faf43/sfm/mesh.ply"
+   },
+   "exports": {
+    "ply": "data/output/32c66d22-947c-49d0-9796-5e9afd8faf43/pointcloud/dense.ply",
+    "obj": "data/output/32c66d22-947c-49d0-9796-5e9afd8faf43/mesh/model.obj",
+    "las": "data/output/32c66d22-947c-49d0-9796-5e9afd8faf43/pointcloud/dense.las",
+    "geotiff": "data/output/32c66d22-947c-49d0-9796-5e9afd8faf43/geotiff/dsm.tif",
+    "orthophoto": "data/output/32c66d22-947c-49d0-9796-5e9afd8faf43/geotiff/orthophoto.tif",
+    "glb": "data/output/32c66d22-947c-49d0-9796-5e9afd8faf43/mesh/model.glb",
+    "fbx": "data/output/32c66d22-947c-49d0-9796-5e9afd8faf43/mesh/model.fbx"
+   },
+   "extra_scenes": []
+  },
+  "textureStats": {
+   "faces": 750004,
+   "t_decimate_s": 16.3,
+   "faces_split_added": 4,
+   "pages": 2,
+   "texel_m": 0.2679,
+   "gsd_m": 0.2679,
+   "t_unwrap_s": 1.8,
+   "t_viewpick_s": 9.3,
+   "exposure_gain_range": [
+    0.909,
+    1.17
+   ],
+   "t_balance_s": 3,
+   "views_rejected_photometric": 76406,
+   "seam_edges_pct_greedy": 49.2,
+   "seam_edges_pct": 28.4,
+   "faces_clear_view": 723478,
+   "faces_fallback_view": 26369,
+   "faces_vertex_colour": 157,
+   "t_label_s": 17.3,
+   "texel_fill": 0.388,
+   "views_used": 150,
+   "t_bake_s": 11.2,
+   "t_total_s": 59.6
+  },
+  "origin": {
+   "ecef_offset": {
+    "x": -743815.4075312889,
+    "y": -5463158.234952648,
+    "z": 3195644.657103518
+   },
+   "wgs84": {
+    "lat": 30.263706480678028,
+    "lon": -97.7532147116421,
+    "alt_m": -23.720267460681498
+   }
+  },
+  "bounds": {
+   "epsg": 32614,
+   "sw": {
+    "lat": 30.256819335560795,
+    "lon": -97.76006115184683
+   },
+   "ne": {
+    "lat": 30.271314636682195,
+    "lon": -97.74589434154073
+   },
+   "center": {
+    "lat": 30.264066986121495,
+    "lon": -97.75297774669377
+   }
+  }
+ }
+]

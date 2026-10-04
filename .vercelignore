@@ -1,0 +1,4 @@
+# Run files are served from Vercel Blob (RUNS_BASE_URL); runs-manifest.json stands in for them at build time.
+Output
+dist
+node_modules
