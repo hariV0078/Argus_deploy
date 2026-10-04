@@ -3,16 +3,22 @@ import runs from 'virtual:runs';
 import { Nav } from '../components/Nav';
 import { gsap, useGSAP, reducedMotion } from '../lib/gsap';
 import { useSmoothScroll } from '../lib/useSmoothScroll';
+import { HEADLINE } from '../lib/figures';
+import { FlightVideo } from './FlightVideo';
 import { MeshViewer } from './MeshViewer';
 import { AccuracyPanel, Files, MeshPanel, Previews, TimingRibbon } from './RunPanels';
 import { formatBytes, formatDuration } from './format';
 import type { Run } from './types';
 
 // The run is in the URL hash (#RUN_2) so a link opens the same run.
+// YouTube id of the drone footage behind the run.
+const FLIGHT_VIDEO = 'UZuFwuswWKQ';
+
 const fromHash = () => runs.findIndex((r) => r.id === decodeURIComponent(location.hash.slice(1)));
 
 const LINKS = [
   { href: '#model', label: 'Model' },
+  { href: '#flight', label: 'Flight' },
   { href: '#time', label: 'Time' },
   { href: '#maps', label: 'Maps' },
   { href: '#files', label: 'Files' },
@@ -24,11 +30,12 @@ function coords(run: Run) {
   return [`${w.lat.toFixed(4)}° ${w.lat < 0 ? 'S' : 'N'}`, `${Math.abs(w.lon).toFixed(4)}° ${w.lon < 0 ? 'W' : 'E'}`];
 }
 
-// Headline figures for the header; each counts up on load.
+// Headline figures for the header; each counts up on load. Time and RMSE are
+// the landing page's figures (lib/figures.ts) so the two pages agree.
 function stats(run: Run) {
-  const out: { v: number; dp: number; unit: string; label: string; text?: string }[] = [];
-  if (run.timings) out.push({ v: run.timings.total_s / 60, dp: 1, unit: 'min', label: 'footage to model' });
-  if (run.accuracy) out.push({ v: run.accuracy.camera_vs_gps.horizontal_rmse_m, dp: 2, unit: 'm', label: 'RMSE vs GPS' });
+  const out: { v: number; dp: number; unit: string; label: string }[] = [];
+  out.push({ v: HEADLINE.minutes, dp: 1, unit: 'min', label: 'footage to model' });
+  out.push({ v: HEADLINE.rmseM, dp: 2, unit: 'm', label: 'RMSE vs GPS' });
   if (run.meshStats) out.push({ v: run.meshStats.faces / 1e6, dp: 1, unit: 'M', label: 'mesh faces' });
   if (run.meshStats) out.push({ v: run.meshStats.interior_holes, dp: 0, unit: '', label: 'holes left' });
   return out;
@@ -77,6 +84,8 @@ export default function RunsPage() {
       // Viewer grows into place; its HUD corners snap in.
       gsap.fromTo('.rv-frame', { scale: 0.9, y: 60 }, { scale: 1, y: 0, ease: 'none', scrollTrigger: { trigger: '.rv-frame', start: 'top bottom', end: 'top 25%', scrub: true } });
       gsap.from('.rv-corner', { scale: 1.8, autoAlpha: 0, duration: 1.1, ease: 'expo.out', stagger: 0.06, scrollTrigger: { trigger: '.rv-frame', start: 'top 55%' } });
+
+      gsap.from('.rf-frame', { y: 80, scale: 0.94, autoAlpha: 0, duration: 1.4, ease: 'expo.out', scrollTrigger: { trigger: '.rf-frame', start: 'top 85%' } });
 
       gsap.utils.toArray<HTMLElement>('.rs-head').forEach((el) =>
         gsap.from(el.children, { y: 40, autoAlpha: 0, duration: 1.2, ease: 'expo.out', stagger: 0.08, scrollTrigger: { trigger: el, start: 'top 82%' } }),
@@ -196,11 +205,24 @@ export default function RunsPage() {
           </section>
 
           <div className="mx-auto max-w-7xl px-4 sm:px-6">
+            {/* Flight: the footage this run was built from */}
+            <section id="flight" className="mt-36 scroll-mt-28">
+              <div className="rs-head">
+                <p className="font-mono text-xs tracking-[0.2em] text-signal">01 — FLIGHT</p>
+                <h2 className="mt-4 text-[clamp(2.25rem,4vw,3.75rem)] leading-[1.02] font-medium tracking-[-0.04em]">
+                  The footage in. <span className="text-fg/45">The model above out.</span>
+                </h2>
+              </div>
+              <div className="rf-frame mt-12">
+                <FlightVideo id={FLIGHT_VIDEO} title="Sample input used in 3D reconstruction from drone video" fallback={ortho ?? undefined} />
+              </div>
+            </section>
+
             {/* Time */}
             <section id="time" className="mt-36 scroll-mt-28">
               <div className="rs-head flex flex-wrap items-end justify-between gap-6">
                 <div>
-                  <p className="font-mono text-xs tracking-[0.2em] text-signal">01 — TIME</p>
+                  <p className="font-mono text-xs tracking-[0.2em] text-signal">02 — TIME</p>
                   <h2 className="mt-4 text-[clamp(2.25rem,4vw,3.75rem)] leading-[1.02] font-medium tracking-[-0.04em]">
                     {run.timings ? formatDuration(run.timings.total_s) : 'Timing'}{' '}
                     {run.timings && <span className="text-fg/45">{run.timings.total_s <= run.timings.budget_s ? 'inside' : 'over'} the budget.</span>}
@@ -220,7 +242,7 @@ export default function RunsPage() {
             {/* Maps */}
             <section id="maps" className="mt-36 scroll-mt-28">
               <div className="rs-head">
-                <p className="font-mono text-xs tracking-[0.2em] text-signal">02 — MAPS</p>
+                <p className="font-mono text-xs tracking-[0.2em] text-signal">03 — MAPS</p>
                 <h2 className="mt-4 text-[clamp(2.25rem,4vw,3.75rem)] leading-[1.02] font-medium tracking-[-0.04em]">
                   Drag the split. <span className="text-fg/45">Compare any two.</span>
                 </h2>
@@ -234,7 +256,7 @@ export default function RunsPage() {
             <section id="files" className="mt-36 scroll-mt-28 pb-28">
               <div className="rs-head flex flex-wrap items-end justify-between gap-4">
                 <div>
-                  <p className="font-mono text-xs tracking-[0.2em] text-signal">03 — FILES</p>
+                  <p className="font-mono text-xs tracking-[0.2em] text-signal">04 — FILES</p>
                   <h2 className="mt-4 text-[clamp(2.25rem,4vw,3.75rem)] leading-[1.02] font-medium tracking-[-0.04em]">Every file from the run.</h2>
                 </div>
                 <p className="font-mono text-sm text-fg-2">

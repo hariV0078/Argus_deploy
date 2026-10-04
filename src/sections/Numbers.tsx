@@ -1,12 +1,13 @@
 import { useRef } from 'react';
 import { gsap, useGSAP, reducedMotion } from '../lib/gsap';
+import { HEADLINE } from '../lib/figures';
 
-// Toledo run, backend/ARCHITECTURE.md. RMSE is agreement with onboard GPS.
+// RMSE is agreement with onboard GPS, not certified absolute accuracy.
 const STATS = [
-  { v: 14.9, dp: 1, unit: 'min', label: 'footage to model' },
-  { v: 1.34, dp: 2, unit: 'm', label: 'RMSE against drone GPS' },
-  { v: 0, dp: 0, unit: '', label: 'holes in the mesh' },
-  { v: 0, dp: 0, unit: '', label: 'ground control points' },
+  { v: HEADLINE.minutes, dp: 1, unit: 'min', label: 'footage to model' },
+  { v: HEADLINE.rmseM, dp: 2, unit: 'm', label: 'RMSE against drone GPS' },
+  { v: HEADLINE.holes, dp: 0, unit: '', label: 'holes in the mesh' },
+  { v: HEADLINE.gcps, dp: 0, unit: '', label: 'ground control points' },
 ];
 
 export function Numbers() {
